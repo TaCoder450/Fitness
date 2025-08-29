@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fitness Tracker (HTML • CSS • JS)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>🏃‍♀️ Fitness Tracker</h1>
+    <button id="openSettings" class="btn ghost">Goals ⚙️</button>
+  </header>
+
+  <main class="container">
+    <!-- DASHBOARD -->
+    <section class="card">
+      <h2>Dashboard</h2>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-title">Today's Steps</span>
+            <span id="todaySteps" class="kpi-value">0</span>
+          </div>
+          <div class="progress">
+            <div id="stepsBar" class="progress-bar"></div>
+          </div>
+          <small id="stepsGoalText">Goal: 8000</small>
+        </div>
+
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-title">Today's Calories</span>
+            <span id="todayCalories" class="kpi-value">0</span>
+          </div>
+          <div class="progress">
+            <div id="calBar" class="progress-bar"></div>
+          </div>
+          <small id="calGoalText">Goal: 500 kcal</small>
+        </div>
+
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-title">Workouts</span>
+            <span id="todayWorkouts" class="kpi-value">0</span>
+          </div>
+          <div class="progress">
+            <div id="woBar" class="progress-bar"></div>
+          </div>
+          <small id="woGoalText">Goal: 1</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK ADD -->
+    <section class="card">
+      <h2>Log Activity</h2>
+      <form id="logForm" class="grid">
+        <label class="field">
+          <span>Date</span>
+          <input type="date" id="date" required />
+        </label>
+
+        <label class="field">
+          <span>Type</span>
+          <select id="type" required>
+            <option value="steps">Steps</option>
+            <option value="workout">Workout</option>
+            <option value="calories">Calories</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Value</span>
+          <input type="number" id="value" min="0" step="1" placeholder="e.g., 5000 steps / 45 min / 300 kcal" required />
+        </label>
+
+        <label class="field">
+          <span>Notes (optional)</span>
+          <input type="text" id="notes" placeholder="Morning run, yoga, etc." />
+        </label>
+
+        <div class="actions">
+          <button class="btn" type="submit">Add Entry</button>
+          <button class="btn ghost" type="button" id="clearToday">Clear Today</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- WEEKLY SUMMARY -->
+    <section class="card">
+      <h2>Weekly Summary</h2>
+      <div class="legend">
+        <span>Steps</span><span>Calories</span><span>Workouts</span>
+      </div>
+      <canvas id="weekChart" width="900" height="280" aria-label="Weekly chart"></canvas>
+      <div class="week-totals">
+        <div><strong>Steps (7d):</strong> <span id="wSteps">0</span></div>
+        <div><strong>Calories (7d):</strong> <span id="wCalories">0</span></div>
+        <div><strong>Workouts (7d):</strong> <span id="wWorkouts">0</span></div>
+      </div>
+    </section>
+
+    <!-- LOG TABLE -->
+    <section class="card">
+      <h2>All Entries</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Value</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="logTable"></tbody>
+        </table>
+      </div>
+      <div class="actions end">
+        <button id="exportBtn" class="btn ghost">Export JSON</button>
+        <button id="importBtn" class="btn ghost">Import JSON</button>
+        <input id="importFile" type="file" accept="application/json" hidden />
+        <button id="clearAll" class="btn danger">Clear All Data</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- SETTINGS MODAL -->
+  <dialog id="settingsDlg">
+    <form method="dialog" class="card dialog-card">
+      <h3>Goals</h3>
+      <div class="grid">
+        <label class="field">
+          <span>Daily Steps Goal</span>
+          <input type="number" id="goalSteps" min="0" step="100" />
+        </label>
+        <label class="field">
+          <span>Daily Calories Goal</span>
+          <input type="number" id="goalCalories" min="0" step="10" />
+        </label>
+        <label class="field">
+          <span>Daily Workouts Goal</span>
+          <input type="number" id="goalWorkouts" min="0" step="1" />
+        </label>
+      </div>
+      <div class="actions">
+        <button class="btn" id="saveGoals" type="button">Save</button>
+        <button class="btn ghost" value="cancel">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="footer">
+    <small>Data is stored locally in your browser (localStorage).</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
